@@ -20,8 +20,23 @@ const Grid = ({
   submitted,
   setSubmitted,
 }: GridProps) => {
-  const hexChecker = (letterList: string[], row: number) => {
-    if (letterList[0] !== "A") {
+  const validNumber = (letter: string) => {
+    return (letter >= "0" && letter <= "9");
+  }
+
+  const validLetter = (letter: string) => {
+    return (letter >= "A" && letter <= "F");
+  }
+
+  const isValidHex = (letterlist: string[]) => {
+    for (let i = 0; i < letterlist.length; i++) {
+      if (!validNumber(letterlist[i]) && !validLetter(letterlist[i])) return false;
+    };
+    return true;
+  }
+
+  const manageInput = (letterList: string[], row: number) => {
+    if (!isValidHex(letterList)) {
       window.alert("Not a valid hex code!");
       return false;
     } else {
@@ -39,7 +54,7 @@ const Grid = ({
       let copyLetters = JSON.parse(JSON.stringify(letters));
       if (e.key === "Enter") {
         if (!(currRow > 0 && currCol === 0)) return;
-        hexChecker(letters[currRow - 1], currRow - 1);
+        manageInput(letters[currRow - 1], currRow - 1);
         return;
       }
 
