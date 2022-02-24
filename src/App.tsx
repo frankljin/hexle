@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Grid from "./components/Grid";
+import "./App.css";
 
 function App() {
+  const [currRow, setCurrRow] = useState(0);
+  const [currCol, setCurrCol] = useState(0);
+  const [letters, setLetters] = useState([
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+    ["", "", "", "", "", ""],
+  ]);
+  const [submitted, setSubmitted] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main">
+      <h1>Hexle</h1>
+      <Grid
+        letters={letters}
+        setLetters={setLetters}
+        currCol={currCol}
+        setCurrCol={setCurrCol}
+        currRow={currRow}
+        setCurrRow={setCurrRow}
+        submitted={submitted}
+        setSubmitted={setSubmitted}
+      />
     </div>
   );
 }
