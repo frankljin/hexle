@@ -9,6 +9,9 @@ type GridProps = {
   setCurrRow: React.Dispatch<React.SetStateAction<number>>;
   submitted: boolean[];
   setSubmitted: React.Dispatch<React.SetStateAction<boolean[]>>;
+  win: boolean;
+  setWin: React.Dispatch<React.SetStateAction<boolean>>;
+  hexOfDay: string;
 };
 const Grid = ({
   letters,
@@ -19,6 +22,9 @@ const Grid = ({
   setCurrRow,
   submitted,
   setSubmitted,
+  win,
+  setWin,
+  hexOfDay,
 }: GridProps) => {
   const validNumber = (letter: string) => {
     return (letter >= "0" && letter <= "9");
@@ -28,15 +34,44 @@ const Grid = ({
     return (letter >= "A" && letter <= "F");
   }
 
-  const isValidHex = (letterlist: string[]) => {
+  const checkIfAnswer = (letterlist: string[], row: number, hexOfDay: string) => {
+    let letterCounts = new Map<string, any>();
+    for (let i = 0; i < 6; i++) {
+      if (letterCounts.has(hexOfDay[i])) {
+        letterCounts.set(hexOfDay[i], letterCounts.get(hexOfDay[i]) + 1)
+      } else {
+        letterCounts.set(hexOfDay[i], 1);
+      }
+    }
+    for (let i = 0; i < 6; i++) {
+      if (letterlist[i] === hexOfDay[i]) {
+        document.getElementById(row.toString() + i.toString())!.style.backgroundColor = "#90ee90";
+        letterCounts.set(letterlist[i], letterCounts.get(letterlist[i]) - 1);
+      }
+    }
+    for (let i = 0; i < 6; i++) {
+      if (letterCounts.has(letterlist[i]) && letterCounts.get(letterlist[i]) > 0) {
+        document.getElementById(row.toString() + i.toString())!.style.backgroundColor = "#fffcbb";
+        letterCounts.set(letterlist[i], letterCounts.get(letterlist[i]) - 1);
+      }
+    }
+    let success: boolean = true;
+    letterCounts.forEach((value: any) => {
+      if (value > 0) success = false;
+    });
+    if (success) setWin(true);
+  }
+
+  const isValidHex = (letterlist: string[], row: number) => {
     for (let i = 0; i < letterlist.length; i++) {
       if (!validNumber(letterlist[i]) && !validLetter(letterlist[i])) return false;
     };
+    checkIfAnswer(letterlist, row, hexOfDay);
     return true;
   }
 
   const manageInput = (letterList: string[], row: number) => {
-    if (!isValidHex(letterList)) {
+    if (!isValidHex(letterList, row)) {
       window.alert("Not a valid hex code!");
       return false;
     } else {
@@ -51,6 +86,7 @@ const Grid = ({
 
   useEffect(() => {
     function handleKeyDown(e: any) {
+      if (win) return;
       let copyLetters = JSON.parse(JSON.stringify(letters));
       if (e.key === "Enter") {
         if (!(currRow > 0 && currCol === 0)) return;
@@ -94,9 +130,9 @@ const Grid = ({
     };
   }, [currRow, currCol, letters, submitted]);
 
-  const cells = letters.map((letterRow: string[]) =>
-    letterRow.map((letter: string) => (
-      <div className="item">
+  const cells = letters.map((letterRow: string[], row: number) =>
+    letterRow.map((letter: string, col: number) => (
+      <div className="item" id={`${row}${col}`}>
         <span className="itemText">{letter}</span>
       </div>
     ))
