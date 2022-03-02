@@ -44,7 +44,8 @@ body {
   .itemText {
     font-size: 2vw;
     vertical-align: middle;
-    line-height: 6vw;;
+    line-height: 6vw;
+    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
   }
 }
 

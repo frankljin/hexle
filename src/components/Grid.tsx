@@ -48,6 +48,16 @@ const Grid = ({
     row: number,
     hexOfDay: string
   ) => {
+    let currHex = "#";
+    for (let i = 0; i < 6; i++) {
+      currHex += letters[row][i];
+    }
+    for (let i = 0; i < 6; i++) {
+      document.getElementById(
+        row.toString() + i.toString() + "text"
+      )!.style.color = currHex;
+    }
+
     let letterCounts = new Map<string, any>();
     for (let i = 0; i < 6; i++) {
       if (letterCounts.has(hexOfDay[i])) {
@@ -185,7 +195,9 @@ const Grid = ({
   const cells = letters.map((letterRow: string[], row: number) =>
     letterRow.map((letter: string, col: number) => (
       <div className="item" id={`${row}${col}`}>
-        <span className="itemText">{letter}</span>
+        <span className="itemText" id={`${row}${col}text`}>
+          {letter}
+        </span>
       </div>
     ))
   );

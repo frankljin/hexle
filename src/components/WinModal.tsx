@@ -26,7 +26,8 @@ const WinModal = ({ win, letters, hexleNumber }: WinModalProps) => {
     for (let i = 0; i < 6; i++) {
       if (letters[i][0] === "") break;
       for (let j = 0; j < 6; j++) {
-        const color = document.getElementById(i.toString() + j.toString())!.style.backgroundColor;
+        const color = document.getElementById(i.toString() + j.toString())!
+          .style.backgroundColor;
         if (color === "rgb(144, 238, 144)") {
           lettersText += "🟩";
         } else if (color === "rgb(255, 252, 187)") {
@@ -44,9 +45,9 @@ const WinModal = ({ win, letters, hexleNumber }: WinModalProps) => {
         setCopyText("Results have been copied to your clipboard!");
       })
       .catch(() => {
-        window.alert("An error occured copying your results :(")
+        window.alert("An error occured copying your results :(");
       });
-  }
+  };
   return (
     <Modal show={win && showWinModal} onHide={handleCloseWin}>
       <Modal.Header>
@@ -60,7 +61,9 @@ const WinModal = ({ win, letters, hexleNumber }: WinModalProps) => {
         <p className="text-primary">{copyText}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => copyToClipboard()}>Share Results</Button>
+        <Button variant="primary" onClick={() => copyToClipboard()}>
+          Share Results
+        </Button>
       </Modal.Footer>
     </Modal>
   );
