@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
 import Grid from "./components/Grid";
+import WinModal from "./components/WinModal";
+import LoseModal from "./components/LoseModal";
+import AboutModal from "./components/AboutModal";
+import { answers } from "./answers";
 import "./App.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [currRow, setCurrRow] = useState(0);
@@ -24,14 +26,42 @@ function App() {
     false,
   ]);
   const [win, setWin] = useState(false);
-  const [showWinModal, setShowWinModal] = useState(true);
-  const handleCloseWin = () => {
-    setShowWinModal(false);
-  }
+  const [lose, setLose] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(true);
+
+  const handleCloseAbout = () => {
+    setShowAboutModal(false);
+  };
+
+  const handleOpenAbout = () => {
+    setShowAboutModal(true);
+  };
+
+  const hexleNumber = (date: Date) =>
+    Math.floor(
+      (date.valueOf() - new Date(date.getFullYear(), 0, 0).valueOf()) /
+        1000 /
+        60 /
+        60 /
+        24
+    ) - 61;
+
+  const hexOfDay = answers[hexleNumber(new Date())];
 
   return (
     <div className="main">
-      <h1>Hexle</h1>
+      <h1
+        className="title"
+        onClick={handleOpenAbout}
+        style={{ color: "#" + hexOfDay }}
+      >
+        #Hexle
+      </h1>
+      <p>
+        Guess the colour of{" "}
+        <span style={{ color: "#" + hexOfDay }}>#Hexle</span> in 6 tries! New
+        colour daily.
+      </p>
       <Grid
         letters={letters}
         setLetters={setLetters}
@@ -43,19 +73,15 @@ function App() {
         setSubmitted={setSubmitted}
         win={win}
         setWin={setWin}
-        hexOfDay={"A0B1C2"}
+        setLose={setLose}
+        hexOfDay={hexOfDay}
       />
-      <Modal show={win && showWinModal} onHide={handleCloseWin}>
-      <Modal.Header>
-        <Modal.Title>Congratulations!</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>You got it! Press "Share Results" to get a spoiler-free look at your game copied to your clipboard.</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary">Share Results</Button>
-      </Modal.Footer>
-    </Modal>
+      <WinModal win={win} letters={letters} hexleNumber={hexleNumber(new Date())}/>
+      <LoseModal lose={lose} letters={letters} hexOfDay={hexOfDay} hexleNumber={hexleNumber(new Date())}/>
+      <AboutModal
+        showAboutModal={showAboutModal}
+        handleCloseAbout={handleCloseAbout}
+      />
     </div>
   );
 }
