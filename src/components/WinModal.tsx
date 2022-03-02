@@ -38,7 +38,14 @@ const WinModal = ({ win, letters, hexleNumber }: WinModalProps) => {
       lettersText += "\n";
     }
     navigator.clipboard.writeText(lettersText);
-    setCopyText("Results have been copied to your clipboard!");
+    navigator.clipboard
+      .writeText(lettersText)
+      .then(() => {
+        setCopyText("Results have been copied to your clipboard!");
+      })
+      .catch(() => {
+        window.alert("An error occured copying your results :(")
+      });
   }
   return (
     <Modal show={win && showWinModal} onHide={handleCloseWin}>
