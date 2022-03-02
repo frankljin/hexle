@@ -129,7 +129,8 @@ const Grid = ({
       !(key >= "a" && key <= "f" && key.length === 1) &&
       !(key >= "0" && key <= "9" && key.length === 1) &&
       key !== "Backspace" &&
-      key !== "Enter"
+      key !== "Enter" &&
+      key !== "Delete"
     )
       return;
     let copyLetters = JSON.parse(JSON.stringify(letters));
@@ -139,7 +140,7 @@ const Grid = ({
       return;
     }
 
-    if (key === "Backspace") {
+    if (key === "Backspace" || key === "Delete") {
       if (currCol === 0 && currRow === 0) {
         copyLetters[0][0] = "";
         setLetters(copyLetters);

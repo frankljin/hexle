@@ -18,7 +18,7 @@ const WinModal = ({ win, letters, hexleNumber }: WinModalProps) => {
     let tries = 0;
     for (let i = 0; i < 6; i++) {
       if (letters[i][0] === "") {
-        tries = i - 1;
+        tries = i;
         break;
       }
     }
