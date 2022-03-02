@@ -15,7 +15,7 @@ const WinModal = ({ win, letters, hexleNumber }: WinModalProps) => {
   };
 
   const copyToClipboard = () => {
-    let tries = 0;
+    let tries = 6;
     for (let i = 0; i < 6; i++) {
       if (letters[i][0] === "") {
         tries = i;
