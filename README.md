@@ -1,3 +1,3 @@
 # Hexle
 
-Work in progress - a variation of the game Wordle.
+A variation of Wordle: guess the hex code! The colour of Hexle is the solution. 
