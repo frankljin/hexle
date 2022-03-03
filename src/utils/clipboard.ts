@@ -14,6 +14,8 @@ const colorMapping: any = {
  */
 const getClipboardText = (letters: string[][], isWin: boolean, hexleNumber: number): string => {
   let tries: string | number;
+
+  // Lost
   if (!isWin) tries = "X";
   else {
     tries = letters.findIndex((row) => row[0] === "");
@@ -22,7 +24,9 @@ const getClipboardText = (letters: string[][], isWin: boolean, hexleNumber: numb
   }
   let lettersText = `Hexle${hexleNumber} ${tries}/6\n`;
 
+  // Loop over each row and reduce into a single string
   lettersText += letters.reduce((prevValue, row, i) => {
+    // Get squares of each row
     const squares = row
       .map((letter, j) => {
         const color = document.getElementById(i.toString() + j.toString())!
