@@ -1,10 +1,9 @@
 import { useState } from "react";
 import Grid from "./components/Grid";
-import WinModal from "./components/WinModal";
-import LoseModal from "./components/LoseModal";
 import AboutModal from "./components/AboutModal";
 import { answers } from "./answers";
 import "./App.css";
+import FinishModal from "./components/FinishModal";
 
 function App() {
   const [currRow, setCurrRow] = useState(0);
@@ -76,8 +75,13 @@ function App() {
         setLose={setLose}
         hexOfDay={hexOfDay}
       />
-      <WinModal win={win} letters={letters} hexleNumber={hexleNumber(new Date())}/>
-      <LoseModal lose={lose} letters={letters} hexOfDay={hexOfDay} hexleNumber={hexleNumber(new Date())}/>
+      <FinishModal
+        win={win}
+        lose={lose}
+        letters={letters}
+        hexleNumber={hexleNumber(new Date())}
+        hexOfDay={hexOfDay}
+      />
       <AboutModal
         showAboutModal={showAboutModal}
         handleCloseAbout={handleCloseAbout}
