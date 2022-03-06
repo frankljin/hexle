@@ -24,8 +24,12 @@ const getClipboardText = (letters: string[][], isWin: boolean, hexleNumber: numb
   }
   let lettersText = `Hexle ${hexleNumber} ${tries}/6\n https://frankljin.github.io/hexle/\n`;
 
+  console.log(letters)
+
   // Loop over each row and reduce into a single string
   lettersText += letters.reduce((prevValue, row, i) => {
+    // Do not add the row if it was not used.
+    if (isWin && tries <= i)  return prevValue;
     // Get squares of each row
     const squares = row
       .map((letter, j) => {
@@ -34,6 +38,7 @@ const getClipboardText = (letters: string[][], isWin: boolean, hexleNumber: numb
         return colorMapping[color] || "⬜";
       })
       .join("");
+    console.log(`row: ${row}`)
     return `${prevValue}${squares}\n`;
   }, "");
 
