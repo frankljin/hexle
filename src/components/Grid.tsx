@@ -89,7 +89,7 @@ const Grid = ({
             if (keys[j][k] === letterlist[i]) {
               document.getElementById(
                 letterlist[i] + "Color"
-              )!.style.backgroundColor = "#e1e1e1";
+              )!.style.backgroundColor = "#bbbbbb";
             }
           }
         }
@@ -203,7 +203,7 @@ const Grid = ({
         <div
           style={{
             margin: "0px 5px",
-            border: "1px solid #BBBBBB"
+            borderRight: "2px solid #BBBBBB",
           }}
         />
         <div
@@ -212,7 +212,6 @@ const Grid = ({
             submitted[row]
               ? {
                   backgroundColor: `#${letterRow.join("")}`,
-                  // boxShadow: "1px 1px 1px gray",
                 }
               : {}
           }
@@ -221,23 +220,27 @@ const Grid = ({
     );
   });
 
-  const letterCells = keys.map((letterRow: string[], row: number) =>
-    letterRow.map((letter: string, col: number) => (
-      <div
-        className="letter"
-        id={`${letter}Color`}
-        onClick={() => handleKeyDownString(letter)}
-      >
-        <span className="letterText">{letter}</span>
+  const letterCells = keys.map((letterRow: string[], row: number) => {
+    return (
+      <div className="letter-row">
+        {letterRow.map((letter: string, col: number) => (
+          <div
+            className="item letter"
+            id={`${letter}Color`}
+            onClick={() => handleKeyDownString(letter)}
+          >
+            <span className="letterText">{letter}</span>
+          </div>
+        ))}
       </div>
-    ))
-  );
+    );
+  });
 
   return (
     <>
       <div className="letter-row-container">{cells}</div>
       <br />
-      <div className="container">{letterCells}</div>
+      <div className="letter-row-container">{letterCells}</div>
     </>
   );
 };

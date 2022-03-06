@@ -15,12 +15,6 @@ body {
     width: 90%;
     height: 90%;
   }
-
-  .letterText {
-    font-size: 4vw;
-    vertical-align: middle;
-    line-height: 12vw;
-  }
 }
 
 @media only screen and (min-width: 600px) {
@@ -31,12 +25,6 @@ body {
     justify-content: center;
     width: 40%;
     height: 40%;
-  }
-
-  .letterText {
-    font-size: 2vw;
-    vertical-align: middle;
-    line-height: 6vw;
   }
 }
 
@@ -76,9 +64,6 @@ body {
 
 .hashtag-cell {
   background-color: white;
-}
-
-.color-cell {
 }
 
 .letter-row {
