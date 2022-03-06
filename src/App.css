@@ -2,6 +2,10 @@ body {
   background-color: white;
 }
 
+.itemText {
+  display: block;
+}
+
 @media only screen and (max-width: 768px) {
   .container {
     display: grid;
@@ -10,19 +14,6 @@ body {
     justify-content: center;
     width: 90%;
     height: 90%;
-  }
-
-  .letterText {
-    font-size: 4vw;
-    vertical-align: middle;
-    line-height: 12vw;
-  }
-
-  .itemText {
-    font-size: 4vw;
-    vertical-align: middle;
-    line-height: 12vw;
-    text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -35,25 +26,23 @@ body {
     width: 40%;
     height: 40%;
   }
-
-  .letterText {
-    font-size: 2vw;
-    vertical-align: middle;
-    line-height: 6vw;
-  }
-
-  .itemText {
-    font-size: 2vw;
-    vertical-align: middle;
-    line-height: 6vw;
-    text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
-  }
 }
 
 .item {
   background-color: #f1f1f1;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
   aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  margin: 3px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  border: 2px solid #f1f1f1;;
+}
+
+.item.submitted {
+  border: 2px solid #BBBBBB;
 }
 
 .main {
@@ -66,10 +55,25 @@ body {
 
 .title {
   cursor: pointer;
+  font-weight: 600;
 }
 
 .letter {
-  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
   cursor: pointer;
-  aspect-ratio: 1/1;
+}
+
+.hashtag-cell {
+  background-color: white;
+}
+
+.letter-row {
+  display: flex;
+  justify-content: center;
+  max-width: 90%;
+}
+
+.letter-row-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
