@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import internal from "stream";
 
 type GridProps = {
   letters: string[][];
@@ -11,8 +12,10 @@ type GridProps = {
   setSubmitted: React.Dispatch<React.SetStateAction<boolean[]>>;
   win: boolean;
   setWin: React.Dispatch<React.SetStateAction<boolean>>;
+  lose: boolean;
   setLose: React.Dispatch<React.SetStateAction<boolean>>;
   hexOfDay: string;
+  dayKey: number;
 };
 
 const Grid = ({
@@ -26,8 +29,10 @@ const Grid = ({
   setSubmitted,
   win,
   setWin,
+  lose,
   setLose,
   hexOfDay,
+  dayKey
 }: GridProps) => {
   const validNumber = (letter: string) => {
     return letter >= "0" && letter <= "9";
@@ -42,6 +47,38 @@ const Grid = ({
     ["0", "1", "2", "3", "4", "5"],
     ["Delete", "6", "7", "8", "9", "Enter"],
   ];
+
+  useEffect(() => {
+    localStorage.setItem(dayKey.toString() + "letters", JSON.stringify(letters));
+  }, [letters]);
+
+  useEffect(() => {
+    localStorage.setItem(dayKey.toString() + "col", currCol.toString());
+  }, [currCol]);
+
+  useEffect(() => {
+    localStorage.setItem(dayKey.toString() + "row", currRow.toString());
+  }, [currRow]);
+  
+  useEffect(() => {
+    localStorage.setItem(dayKey.toString() + "submitted", JSON.stringify(submitted));
+  }, [submitted]);
+
+  useEffect(() => {
+    localStorage.setItem(dayKey.toString() + "win", win.toString());
+  }, [win]);
+
+  useEffect(() => {
+    localStorage.setItem(dayKey.toString() + "lose", lose.toString());
+  }, [lose]);
+
+  useEffect(() => {
+    for (let i = 0; i < 6; i++) {
+      if (submitted[i]) {
+        checkIfAnswer(letters[i], i, hexOfDay);
+      }
+    }
+  }, []);
 
   const checkIfAnswer = (
     letterlist: string[],
