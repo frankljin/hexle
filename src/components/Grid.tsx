@@ -52,11 +52,6 @@ const Grid = ({
     for (let i = 0; i < 6; i++) {
       currHex += letters[row][i];
     }
-    for (let i = 0; i < 6; i++) {
-      document.getElementById(
-        row.toString() + i.toString() + "text"
-      )!.style.color = currHex;
-    }
 
     let letterCounts = new Map<string, any>();
     for (let i = 0; i < 6; i++) {
@@ -192,15 +187,39 @@ const Grid = ({
     };
   }, [currRow, currCol, letters, submitted]);
 
-  const cells = letters.map((letterRow: string[], row: number) =>
-    letterRow.map((letter: string, col: number) => (
-      <div className="item" id={`${row}${col}`}>
-        <span className="itemText" id={`${row}${col}text`}>
-          {letter}
-        </span>
+  const cells = letters.map((letterRow: string[], row: number) => {
+    return (
+      <div className="letter-row">
+        {letterRow.map((letter: string, col: number) => (
+          <div
+            className={`item ${submitted[row] && "submitted"}`}
+            id={`${row}${col}`}
+          >
+            <span className="itemText" id={`${row}${col}text`}>
+              {letter}
+            </span>
+          </div>
+        ))}
+        <div
+          style={{
+            margin: "0px 5px",
+            border: "1px solid #BBBBBB"
+          }}
+        />
+        <div
+          className={`item color-cell`}
+          style={
+            submitted[row]
+              ? {
+                  backgroundColor: `#${letterRow.join("")}`,
+                  // boxShadow: "1px 1px 1px gray",
+                }
+              : {}
+          }
+        />
       </div>
-    ))
-  );
+    );
+  });
 
   const letterCells = keys.map((letterRow: string[], row: number) =>
     letterRow.map((letter: string, col: number) => (
@@ -216,7 +235,7 @@ const Grid = ({
 
   return (
     <>
-      <div className="container">{cells}</div>
+      <div className="letter-row-container">{cells}</div>
       <br />
       <div className="container">{letterCells}</div>
     </>
