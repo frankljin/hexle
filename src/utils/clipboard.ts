@@ -22,7 +22,7 @@ const getClipboardText = (letters: string[][], isWin: boolean, hexleNumber: numb
     // If empty row not found, this is a win in 6 guesses.
     tries = tries === -1 ? 6 : tries;
   }
-  let lettersText = `Hexle${hexleNumber} ${tries}/6\n`;
+  let lettersText = `Hexle ${hexleNumber} ${tries}/6\n https://frankljin.github.io/hexle/\n`;
 
   // Loop over each row and reduce into a single string
   lettersText += letters.reduce((prevValue, row, i) => {
