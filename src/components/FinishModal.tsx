@@ -39,7 +39,7 @@ const FinishModal = ({
   return (
     <Modal show={(win || lose) && showModal} onHide={handleCloseModal}>
       <Modal.Header>
-        <Modal.Title>Congratulations!</Modal.Title>
+        <Modal.Title>{win ? "Congratulations!" : "Better luck tomorrow!"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
