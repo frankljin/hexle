@@ -18,12 +18,15 @@ function App() {
 
   const dayKey = hexleNumber(new Date());
 
+  // Ending state of the grid, used in FinishModal for clipboard purposes.
   const [endingGrid, setEndingGrid] = useState<null | GridData>();
 
   const [win, setWin] = useState(false);
   const [lose, setLose] = useState(false);
 
   const [showAboutModal, setShowAboutModal] = useState(() => {
+    // TODO: this still shows about modal every day. 
+    // Make it so that it only ever shows on the user's first visit.
     return !localStorage.getItem(dayKey.toString())
   });
 
