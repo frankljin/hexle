@@ -45,11 +45,11 @@ body {
   margin: 3px;
   font-size: 1.5rem;
   border-radius: 5px;
-  border: 2px solid #f1f1f1;;
+  border: 2px solid #f1f1f1;
 }
 
 .item.submitted {
-  border: 2px solid #BBBBBB;
+  border: 2px solid #bbbbbb;
 }
 
 .main {
@@ -83,4 +83,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.separator {
+  margin: 0px 5px;
+  border-right: 2px solid #bbbbbb;
 }
