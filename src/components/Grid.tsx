@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import {
+  flattenGridData,
   generateRowFromLetters,
   getGridRow,
   isGridRowWin,
   isValidKey,
 } from "../utils/helpers";
-import { GridData } from "../utils/types";
+import { GridData, LookupType } from "../utils/types";
 import GridRow from "./GridRow";
+import Keyboard from "./Keyboard";
 
 type GridProps = {
   hexOfDay: string;
@@ -102,30 +104,11 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
     } else if (currentRowIndex >= 5) {
       handleLose(gridData);
     }
-  }, [])
+  }, []);
 
-  // TODO: refactor the keyboard to its own component.
-  const keys = [
-    ["A", "B", "C", "D", "E", "F"],
-    ["0", "1", "2", "3", "4", "5"],
-    ["Delete", "6", "7", "8", "9", "Enter"],
-  ];
+  const keyboardLookup: LookupType = flattenGridData(gridData);
 
-  const letterCells = keys.map((letterRow: string[], row: number) => {
-    return (
-      <div className="letter-row">
-        {letterRow.map((letter: string, col: number) => (
-          <div
-            className="item letter"
-            id={`${letter}Color`}
-            onClick={() => handleKeyDownString(letter)}
-          >
-            <span className="letterText">{letter}</span>
-          </div>
-        ))}
-      </div>
-    );
-  });
+  console.log(gridData);
 
   return (
     <>
@@ -148,7 +131,10 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
           })}
       </div>
       <br />
-      <div className="letter-row-container">{letterCells}</div>
+      <Keyboard
+        lookup={keyboardLookup}
+        handleClick={(key) => handleKeyDownString(key)}
+      />
     </>
   );
 };

@@ -1,4 +1,10 @@
-import { GridRowData, GridTileStruct, TileStatus } from "../utils/types";
+import {
+  LookupType,
+  GridData,
+  GridRowData,
+  GridTileStruct,
+  TileStatus,
+} from "../utils/types";
 
 export const HEX_LENGTH = 6;
 
@@ -56,21 +62,21 @@ const getTileStatuses = (
       // Reset the letter so that it cannot be modified in the following loop.
       lettersCopy[index] = "";
       // Reset the correct letter to skip its iteration in the next loop
-			// E.g We don't want the player to think there are 2 S's when there is only 1 S. 
-			correctLettersCopy[index] = "";
+      // E.g We don't want the player to think there are 2 S's when there is only 1 S.
+      correctLettersCopy[index] = "";
     }
   });
 
   // Iterate through correct letters, check for yellow (partially correct) letters.
   correctLettersCopy.forEach((correctLetter: string, index: number) => {
-		if (!correctLetter) return;
+    if (!correctLetter) return;
     const partiallyCorrectIndex = lettersCopy.findIndex(
       (letter) => letter === correctLetter
     );
     if (partiallyCorrectIndex !== -1) {
       // Mark as yellow if letter was found.
       statuses[partiallyCorrectIndex] = TileStatus.Partial;
-			// Make sure the letter is not searched for again by unsetting it.
+      // Make sure the letter is not searched for again by unsetting it.
       lettersCopy[partiallyCorrectIndex] = "";
     }
   });
@@ -121,8 +127,10 @@ export const getGridRow = (
  * Check if a grid row represents a win.
  */
 export const isGridRowWin = (gridRow: GridRowData): boolean => {
-	return gridRow.every((tile: GridTileStruct) => tile.status === TileStatus.Correct);
-}
+  return gridRow.every(
+    (tile: GridTileStruct) => tile.status === TileStatus.Correct
+  );
+};
 
 /**
  * If the row is the currently active row, or a future row, we want to generate
@@ -142,4 +150,53 @@ export const generateRowFromLetters = (
         column,
       };
     });
+};
+
+export const KEY_LAYOUT = [
+  ["A", "B", "C", "D", "E", "F"],
+  ["0", "1", "2", "3", "4", "5"],
+  ["Delete", "6", "7", "8", "9", "Enter"],
+];
+
+/**
+ * Transforms grid data into a mapping of tile -> tilestatus. For Keyboard purposes.
+ */
+export const flattenGridData = (gridData: GridData) => {
+  let lookup: LookupType = KEY_LAYOUT.flat().reduce<LookupType>(
+    (prevValue, currentValue) => {
+      return {
+        ...prevValue,
+        [currentValue]: TileStatus.Unsubmitted,
+      };
+    },
+    {}
+  );
+
+  gridData.forEach((gridRow: GridRowData) => {
+    gridRow.forEach((gridTile: GridTileStruct) => {
+      const currentStatus = lookup[gridTile.value];
+      const gridTileStatus = gridTile.status;
+
+      switch (currentStatus) {
+        case TileStatus.Correct:
+          break;
+
+        case TileStatus.Partial:
+          if (gridTileStatus === TileStatus.Correct) {
+            lookup[gridTile.value] = gridTileStatus;
+          }
+          break;
+
+        case TileStatus.Incorrect:
+        case TileStatus.Unsubmitted:
+          lookup[gridTile.value] = gridTileStatus;
+          break;
+
+        default:
+          break;
+      }
+    });
+  });
+
+  return lookup;
 };
