@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   generateRowFromLetters,
   getGridRow,
@@ -16,25 +16,18 @@ type GridProps = {
 };
 
 const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
-  // GridData stores all the grid data. Everything. Check types.ts for details.
   const [gridData, setGridData] = useState<GridData>(() => {
     const saved = localStorage.getItem(dayKey);
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Whenver gridData is updated, update localstorage.
   useEffect(() => {
     localStorage.setItem(dayKey, JSON.stringify(gridData));
   }, [gridData, dayKey]);
 
-  // Keep track of the letters for the active row.
   const [currentRowLetters, setCurrentRowLetters] = useState<string[]>([]);
-  // Which row is the user on?
   const currentRowIndex = gridData.length;
 
-  /**
-   * Handle a keypress or a on-screen keyboard press.
-   */
   const handleKeyDownString = (key: string) => {
     const appendLetter = (newLetter: string) => {
       if (currentRowLetters.length >= 6) return;
@@ -58,7 +51,6 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
       // Invalid hex code, do not do anything.
       if (!newGridRow) return;
 
-      // Append the row to gridData.
       const newGridData: GridData = [...gridDataCopy, newGridRow];
       setGridData(newGridData);
       setCurrentRowLetters([]);
@@ -72,6 +64,7 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
 
     if (!isValidKey(key)) return;
 
+    // Handle submit
     if (key === "Enter") {
       onEnter(currentRowLetters);
     } else if (key === "Backspace" || key === "Delete") {
@@ -81,9 +74,6 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
     }
   };
 
-  /**
-   * Used for listening to keypresses. Dependency array is needed because of document.addEventListener.
-   */
   useEffect(() => {
     const handleKeyDown = (e: any) => {
       handleKeyDownString(e.key);
@@ -95,7 +85,6 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
     };
   }, [currentRowLetters]);
 
-  // This useEffect checks on initialRender whether the user has won/lost, from localstorage.
   useEffect(() => {
     if (gridData[0] && isGridRowWin(gridData[gridData.length - 1])) {
       handleWin(gridData);
@@ -104,7 +93,6 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
     }
   }, [])
 
-  // TODO: refactor the keyboard to its own component.
   const keys = [
     ["A", "B", "C", "D", "E", "F"],
     ["0", "1", "2", "3", "4", "5"],
