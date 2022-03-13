@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/hexle/static/css/main.9d00ca3d.css",
-    "main.js": "/hexle/static/js/main.0343de19.js",
+    "main.css": "/hexle/static/css/main.d23d93b8.css",
+    "main.js": "/hexle/static/js/main.8b54daf6.js",
     "index.html": "/hexle/index.html",
-    "main.9d00ca3d.css.map": "/hexle/static/css/main.9d00ca3d.css.map",
-    "main.0343de19.js.map": "/hexle/static/js/main.0343de19.js.map"
+    "main.d23d93b8.css.map": "/hexle/static/css/main.d23d93b8.css.map",
+    "main.8b54daf6.js.map": "/hexle/static/js/main.8b54daf6.js.map"
   },
   "entrypoints": [
-    "static/css/main.9d00ca3d.css",
-    "static/js/main.0343de19.js"
+    "static/css/main.d23d93b8.css",
+    "static/js/main.8b54daf6.js"
   ]
 }
