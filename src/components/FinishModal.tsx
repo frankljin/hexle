@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { getClipboardText } from "../utils/clipboard";
-import { GridData } from "../utils/types";
 
 type FinishModalProps = {
   win: boolean;
   lose: boolean;
-  endingGrid: GridData;
+  letters: string[][];
   hexOfDay: string;
   hexleNumber: number;
 };
@@ -14,7 +13,7 @@ type FinishModalProps = {
 const FinishModal = ({
   win,
   lose,
-  endingGrid,
+  letters,
   hexOfDay,
   hexleNumber,
 }: FinishModalProps) => {
@@ -25,7 +24,7 @@ const FinishModal = ({
   };
 
   const copyToClipboard = () => {
-    const lettersText = getClipboardText(endingGrid, win, hexleNumber);
+    const lettersText = getClipboardText(letters, win, hexleNumber);
     navigator.clipboard.writeText(lettersText);
     navigator.clipboard
       .writeText(lettersText)
