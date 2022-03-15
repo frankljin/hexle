@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Grid from "./components/Grid";
 import AboutModal from "./components/AboutModal";
 import { answers } from "./answers";
 import "./App.css";
 import FinishModal from "./components/FinishModal";
 import { GridData } from "./utils/types";
+import myGa from "./myGA";
 
 function App() {
-  const hexleNumber = (date: Date) =>
-    Math.floor(
-      (date.valueOf() - new Date(date.getFullYear(), 0, 0).valueOf()) /
-        1000 /
-        60 /
-        60 /
-        24
-    ) - 61;
+  useEffect(() => {
+    myGa();
+  }, []);
+
+  const hexleNumber = (date: Date) => {
+    let start = new Date(date.getFullYear(), 0, 0);
+    let diff = (date.valueOf() - start.valueOf()) + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000);
+    let oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay) - 61;
+  }
+    
 
   const dayKey = hexleNumber(new Date());
 
