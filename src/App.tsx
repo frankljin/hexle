@@ -4,6 +4,7 @@ import AboutModal from "./components/AboutModal";
 import { answers } from "./answers";
 import "./App.css";
 import FinishModal from "./components/FinishModal";
+import { GridData } from "./utils/types";
 import myGa from "./myGA";
 
 function App() {
@@ -19,109 +20,64 @@ function App() {
   }
     
 
-  const dayKey = hexleNumber(new Date())
-  const [currRow, setCurrRow] = useState(() => {
-    const saved = localStorage.getItem(dayKey.toString() + "row");
-    const initialValue = saved ? parseInt(saved) : null;
-    return initialValue || 0;
+  const dayKey = hexleNumber(new Date());
+
+  // Ending state of the grid, used in FinishModal for clipboard purposes.
+  const [endingGrid, setEndingGrid] = useState<null | GridData>();
+
+  const [win, setWin] = useState(false);
+  const [lose, setLose] = useState(false);
+
+  const [showAboutModal, setShowAboutModal] = useState(() => {
+    // TODO: this still shows about modal every day. 
+    // Make it so that it only ever shows on the user's first visit.
+    return !localStorage.getItem(dayKey.toString())
   });
-
-  const [currCol, setCurrCol] = useState(() => {
-    const saved = localStorage.getItem(dayKey.toString() + "col");
-    const initialValue = saved ? parseInt(saved) : null;
-    return initialValue || 0;
-  });
-
-  const [letters, setLetters] = useState(() => {
-    const saved = localStorage.getItem(dayKey.toString() + "letters");
-    const initialValue = saved ? JSON.parse(saved) : null;
-    return initialValue || [
-      ["", "", "", "", "", ""],
-      ["", "", "", "", "", ""],
-      ["", "", "", "", "", ""],
-      ["", "", "", "", "", ""],
-      ["", "", "", "", "", ""],
-      ["", "", "", "", "", ""],
-    ]
-  });
-       
-  const [submitted, setSubmitted] = useState(() => {
-    const saved = localStorage.getItem(dayKey.toString() + "submitted");
-    const initialValue = saved ? JSON.parse(saved) : null;
-    return initialValue || [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    ]
-  });
-
-  const [win, setWin] = useState(() => {
-    const saved = localStorage.getItem(dayKey.toString() + "win");
-    const initialValue = saved ? saved === "true" : null;
-    return initialValue || false;
-  });
-
-  const [lose, setLose] = useState(() => {
-    const saved = localStorage.getItem(dayKey.toString() + "lose");
-    const initialValue = saved ? saved === "true" : null;
-    return initialValue || false;
-  });
-
-  const [showAboutModal, setShowAboutModal] = useState(true);
-
-  const handleCloseAbout = () => {
-    setShowAboutModal(false);
-  };
-
-  const handleOpenAbout = () => {
-    setShowAboutModal(true);
-  };
 
   const hexOfDay = answers[hexleNumber(new Date())];
 
+  const handleWin = (gridData: GridData) => {
+    setWin(true);
+    setEndingGrid(gridData);
+  };
+
+  const handleLose = (gridData: GridData) => {
+    setLose(true);
+    setEndingGrid(gridData);
+  };
+
   return (
     <div className="main">
-      <h1
-        className="title"
-        onClick={handleOpenAbout}
-        style={{ color: "#" + hexOfDay }}
-      >
-        #Hexle
-      </h1>
+      <div>
+        <h1
+          className="title"
+          onClick={() => setShowAboutModal(true)}
+          style={{ color: "#" + hexOfDay }}
+        >
+          #Hexle
+        </h1>
+      </div>
       <p>
         Guess the colour of{" "}
         <span style={{ color: "#" + hexOfDay }}>#Hexle</span> in 6 tries! New
         colour daily.
       </p>
       <Grid
-        letters={letters}
-        setLetters={setLetters}
-        currCol={currCol}
-        setCurrCol={setCurrCol}
-        currRow={currRow}
-        setCurrRow={setCurrRow}
-        submitted={submitted}
-        setSubmitted={setSubmitted}
-        win={win}
-        setWin={setWin}
-        lose={lose}
-        setLose={setLose}
         hexOfDay={hexOfDay}
-        dayKey={dayKey}
+        handleWin={(gridData) => handleWin(gridData)}
+        handleLose={(gridData) => handleLose(gridData)}
+        dayKey={dayKey.toString()}
       />
       <FinishModal
         win={win}
         lose={lose}
-        letters={letters}
+        endingGrid={endingGrid || []}
         hexleNumber={hexleNumber(new Date())}
         hexOfDay={hexOfDay}
       />
       <AboutModal
         showAboutModal={!win && !lose && showAboutModal}
-        handleCloseAbout={handleCloseAbout}
+        handleCloseAbout={() => setShowAboutModal(false)}
       />
     </div>
   );
