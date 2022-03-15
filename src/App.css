@@ -89,3 +89,13 @@ body {
   margin: 0px 5px;
   border-right: 2px solid #bbbbbb;
 }
+
+.color-cell {
+  display: flex;
+  overflow: hidden;
+}
+
+.inner-color-tile {
+  width: 100%;
+  height: 100%;
+}

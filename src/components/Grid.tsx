@@ -118,7 +118,11 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
           .map((_, rowIndex: number) => {
             if (rowIndex < currentRowIndex) {
               return (
-                <GridRow tiles={gridData[rowIndex]} key={rowIndex}></GridRow>
+                <GridRow
+                  tiles={gridData[rowIndex]}
+                  key={rowIndex}
+                  hexOfDay={hexOfDay}
+                ></GridRow>
               );
             }
             const letters = rowIndex > currentRowIndex ? [] : currentRowLetters;
@@ -126,6 +130,7 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
               <GridRow
                 tiles={generateRowFromLetters(letters, rowIndex)}
                 key={rowIndex}
+                hexOfDay={hexOfDay}
               />
             );
           })}
