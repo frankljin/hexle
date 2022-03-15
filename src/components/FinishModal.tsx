@@ -1,3 +1,4 @@
+import ReactGA from "react-ga";
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { getClipboardText } from "../utils/clipboard";
@@ -34,12 +35,19 @@ const FinishModal = ({
       .catch(() => {
         window.alert("An error occured copying your results :(");
       });
+    ReactGA.event({
+      category: "Engagement",
+      action: "Share Results",
+      label: "Share",
+    });
   };
 
   return (
     <Modal show={(win || lose) && showModal} onHide={handleCloseModal}>
       <Modal.Header>
-        <Modal.Title>{win ? "Congratulations!" : "Better luck tomorrow!"}</Modal.Title>
+        <Modal.Title>
+          {win ? "Congratulations!" : "Better luck tomorrow!"}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
