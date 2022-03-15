@@ -64,9 +64,9 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
       setCurrentRowLetters([]);
 
       if (isGridRowWin(newGridRow)) {
-        handleWin(gridData);
+        handleWin(newGridData);
       } else if (currentRowIndex >= 5) {
-        handleLose(gridData);
+        handleLose(newGridData);
       }
     };
 

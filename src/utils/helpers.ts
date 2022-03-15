@@ -51,7 +51,6 @@ const getTileStatuses = (
 
   // Iterate through correct letters, check for green (correct) letters.
   correctLettersCopy.forEach((correctLetter: string, index: number) => {
-		console.log(correctLetter, lettersCopy[index])
     if (lettersCopy[index] === correctLetter) {
       statuses[index] = TileStatus.Correct;
       // Reset the letter so that it cannot be modified in the following loop.
