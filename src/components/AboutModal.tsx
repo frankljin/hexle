@@ -7,7 +7,7 @@ type AboutModalProps = {
 
 const AboutModal = ({ showAboutModal, handleCloseAbout }: AboutModalProps) => {
   return (
-    <Modal show={showAboutModal} onHide={handleCloseAbout}>
+    <Modal show={showAboutModal} onHide={handleCloseAbout} class="game-modal">
       <Modal.Header>
         <Modal.Title>How to play</Modal.Title>
       </Modal.Header>

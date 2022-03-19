@@ -34,7 +34,7 @@ const validLetter = (letter: string) => {
  * Check if an entered keystroke is valid.
  */
 export const isValidKey = (key: string): boolean => {
-  const specialKeys = ["Backspace", "Enter", "Delete"];
+  const specialKeys = ["Backspace", "Enter", "Del"];
 
   if (key.length === 1) {
     return validLetter(key.toUpperCase()) || validNumber(key);
@@ -155,7 +155,7 @@ export const generateRowFromLetters = (
 export const KEY_LAYOUT = [
   ["A", "B", "C", "D", "E", "F"],
   ["0", "1", "2", "3", "4", "5"],
-  ["Delete", "6", "7", "8", "9", "Enter"],
+  ["Del", "6", "7", "8", "9", "Enter"],
 ];
 
 /**

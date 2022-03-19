@@ -1,4 +1,4 @@
-import { TileStatus } from "../utils/types";
+import { TileStatus, DarkTileStatus, LightTileStatus } from "../utils/types";
 
 type KeyboardTileProps = {
   letter: string;
@@ -11,11 +11,18 @@ const KeyboardTile = ({
   tileStatus,
   handleClick,
 }: KeyboardTileProps) => {
+  const darkMode =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
   return (
     <div
       className="item letter"
       onClick={() => handleClick(letter)}
-      style={{ backgroundColor: tileStatus }}
+      style={
+        darkMode
+          ? { backgroundColor: DarkTileStatus[tileStatus] }
+          : { backgroundColor: LightTileStatus[tileStatus] }
+      }
     >
       <span className="letterText">{letter}</span>
     </div>

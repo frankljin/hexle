@@ -1,8 +1,22 @@
 export enum TileStatus {
-	Correct = "#90ee90",
-	Partial = "#fffcbb",
-	Incorrect = "#c1c1c1",
-	Unsubmitted = "#f1f1f1"
+	Correct,
+	Partial,
+	Incorrect,
+	Unsubmitted
+}
+
+export let DarkTileStatus = {
+	[TileStatus.Correct]: "#01b636",
+	[TileStatus.Partial]: "#ffcc00",
+	[TileStatus.Incorrect]: "#242526",
+	[TileStatus.Unsubmitted]: "#3a3b3c"
+}
+
+export let LightTileStatus = {
+	[TileStatus.Correct]: "#90ee90",
+	[TileStatus.Partial]: "#fffcbb",
+	[TileStatus.Incorrect]: "#c1c1c1",
+	[TileStatus.Unsubmitted]: "#f1f1f1"
 }
 
 export interface GridTileStruct {

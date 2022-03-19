@@ -99,3 +99,50 @@ body {
   width: 100%;
   height: 100%;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #18191A;
+  }
+
+  p {
+    color: #ffffff;
+  }
+
+  .item {
+    background-color: #3a3b3c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    margin: 3px;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 2px solid #3a3b3c;
+    color: white;
+  }
+  
+  .item.submitted {
+    border: 2px solid #3a3b3c;
+  }
+
+  .hashtag-cell {
+    background-color: #3a3b3c;
+  }
+
+  .modal-content {
+    background-color: #3a3b3c;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid black;
+  }
+
+  .modal-footer {
+    border-top: 1px solid black;
+  }
+
+  .modal-title {
+    color: white;
+  }
+}
