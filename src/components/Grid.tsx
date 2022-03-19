@@ -76,7 +76,7 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
 
     if (key === "Enter") {
       onEnter(currentRowLetters);
-    } else if (key === "Backspace" || key === "Delete") {
+    } else if (key === "Backspace" || key === "Del") {
       onBackspace();
     } else {
       appendLetter(key);
