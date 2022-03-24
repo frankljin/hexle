@@ -15,9 +15,10 @@ type GridProps = {
   handleWin: (gridData: GridData) => void;
   handleLose: (gridData: GridData) => void;
   dayKey: string;
+  win: boolean;
 };
 
-const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
+const Grid = ({ hexOfDay, handleWin, handleLose, dayKey, win }: GridProps) => {
   // GridData stores all the grid data. Everything. Check types.ts for details.
   const [gridData, setGridData] = useState<GridData>(() => {
     const saved = localStorage.getItem(dayKey);
@@ -88,6 +89,7 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
    */
   useEffect(() => {
     const handleKeyDown = (e: any) => {
+      if (win) return;
       handleKeyDownString(e.key);
     };
 
@@ -95,7 +97,7 @@ const Grid = ({ hexOfDay, handleWin, handleLose, dayKey }: GridProps) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [currentRowLetters]);
+  }, [currentRowLetters, win]);
 
   // This useEffect checks on initialRender whether the user has won/lost, from localstorage.
   useEffect(() => {

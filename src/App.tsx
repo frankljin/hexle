@@ -67,6 +67,7 @@ function App() {
         handleWin={(gridData) => handleWin(gridData)}
         handleLose={(gridData) => handleLose(gridData)}
         dayKey={dayKey.toString()}
+        win={win}
       />
       <FinishModal
         win={win}
